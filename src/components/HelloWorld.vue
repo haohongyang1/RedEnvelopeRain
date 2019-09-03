@@ -1,15 +1,22 @@
 <template>
   <div class="red-package-contain">
-    <img src="@/assets/hongbao.png" :class="getClass()" :style="getStyle()" v-for="item in count" :key="item" @webkitAnimationIteration='iterationEvent(item, $event)'>
+    <!-- @webkitAnimationIteration='iterationEvent(item, $event)' -->
+    <img src="@/assets/hongbao.png" :class="getClass()" :style="getStyle()" v-for="item in count" :key="item"  @click="repackClick">
   </div>
 </template>
 
 <script>
+const repackWarConfig = {
+  count: 10, // 掉落红包数量
+  speed: 1, // y轴位移
+  maxSize: 30, // 最大尺寸
+  minSize: 100, // 最小尺寸
+}
 export default {
   props: {
     count: {
       type: Number,
-      default: 30
+      default: 10 // 掉落红包数量
     },
     minSize: {
       type: Number,
@@ -22,55 +29,73 @@ export default {
   },
   data () {
     return {
+      numClick: 0
     }
   },
   methods: {
-    iterationEvent (item, $event) {
-      $event.target.style.cssText = this.getStyle()
+    repackClick() {
+      this.numClick++ 
+      console.log('点击红包css' + this.numClick)
     },
+    // iterationEvent (item, $event) {
+    //   $event.target.style.cssText = this.getStyle()
+    // },
     getClass () {
       return `hb-item hbsd-${Math.floor(Math.random() * 50 + 30)}`
     },
     getStyle () {
-      return `width:${Math.random() * (this.maxSize - this.minSize) + this.minSize}px;left:${Math.random() * 74 + 10}%`
+      return `width:${Math.random() * (this.maxSize - this.minSize) + this.minSize}px;left:${Math.random() * 70+ 10}%`
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.hb-item{
-  position: absolute;
-  top: 0;
-  z-index: 30000;
-  cursor: pointer;
-}
-/////////////////////////////////
-@keyframes startHB {
-  0% {
-    transform: translateY(-300px);
-    -ms-transform:translateY(-300px);
-    -webkit-transform:translateY(-300px);
+.red-package-contain{
+  .hb-item{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30000;
+    cursor: pointer;
   }
-  100% {
-    transform: translateY(100vh);
-    -ms-transform:translateY(100vh);
-    -webkit-transform:translateY(100vh);
-  }
-}
-@keyframes chandou{
-    0%{margin-left:-120px}
-    50%{margin-left:0px}
-    100%{margin-left:120px}
-}
-
-$total: 100;
-@for $i from 1 through $total {
-  .hbsd-#{$i}{
-      animation: startHB #{$i/20}s linear infinite,chandou #{$i/20}s infinite linear alternate both;
-      -ms-animation:startHB #{$i/20}s linear infinite,chandou #{$i/20}s infinite linear alternate both;
-      -webkit-animation:startHB #{$i/20}s linear infinite,chandou #{$i/20}s infinite linear alternate both;
+  /////////////////////////////////
+  @keyframes startHB {
+    0% {
+      transform: translateY(-300px);
+      -ms-transform:translateY(-300px);
+      -webkit-transform:translateY(-300px);
     }
+    100% {
+      transform: translateY(80vh);
+      -ms-transform:translateY(80vh);
+      -webkit-transform:translateY(80vh);
+    }
+  }
+  // @keyframes chandou{
+  //     0%{margin-left:-120px}
+  //     50%{margin-left:0px}
+  //     100%{margin-left:120px}
+  // }
+
+  $total: 100;
+  $transitionVal: 20;
+  @for $i from 1 through $total {
+    // 倾斜
+    // .hbsd-#{$i}{
+    //     animation: startHB #{$i/$transitionVal}s linear infinite,chandou #{$i/20}s infinite linear alternate both;
+    //     -ms-animation:startHB #{$i/$transitionVal}s linear infinite,chandou #{$i/20}s infinite linear alternate both;
+    //     -webkit-animation:startHB #{$i/$transitionVal}s linear infinite,chandou #{$i/20}s infinite linear alternate both;
+    //   }
+    // 垂直
+    .hbsd-#{$i}{
+        animation: startHB #{$i/$transitionVal}s linear infinite;
+        -ms-animation:startHB #{$i/$transitionVal}s linear infinite;
+        -webkit-animation:startHB #{$i/$transitionVal}s linear infinite;
+      }
+  }
+  /////////////////////////////////
 }
-/////////////////////////////////
+  
 </style>
