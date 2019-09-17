@@ -16,7 +16,9 @@ const Coin = {
   width: '红包宽度',
   height: '红包高度',
   img: '前面缓存好的金币图片',
-  speed: '金币的下落速度'
+  speed: '金币的下落速度',
+  minSize: 30,
+  maxSize: 100,
 }
 
 export default {
@@ -168,7 +170,6 @@ export default {
           img: this.coinArr[i].img, // 随机取一个金币图片对象，这几个图片对象在页面初始化时就已经缓存好了
           speed: this.coinArr[i].speed // 下落速度 随机
         };
-        // debugger
         arr.push(newCoin);
       }
       // 每次都插入一批新金币对象arr到运动的金币数组this.coinArr
@@ -248,65 +249,9 @@ export default {
       });
       this.drawBubble();
       this.bubbleAnimation = window.requestAnimationFrame(this.keepDrawBubble);
-    },
-
+    }
 }
 }
-
-    // createOffScreenCanvas(image) {
-    //   const offscreenCanvas = document.createElement("canvas");
-    //   const offscreenContext = offscreenCanvas.getContext("2d");
-    //   // 这里可以是动态宽高
-    //   offscreenContext.width = 30;
-    //   offscreenContext.height = 30;
-    //   offscreenContext.drawImage(
-    //     image,
-    //     0,
-    //     0,
-    //     offscreenContext.width,
-    //     offscreenContext.height
-    //   );
-    //   // return这个offscreenCanvas
-    //   return offscreenCanvas;
-    // },
-    //     listenClick() {
-    //   const canvas = document.getElementById("canvas");
-    //   canvas.addEventListener("click", e => {
-    //     // 点击位置
-    //     const pos = {
-    //       x: e.clientX,
-    //       y: e.clientY
-    //     };
-    //     // 所有点中的金币都存这
-    //     // const clickedCoins = [];
-    //     this.coinArr.forEach((coin, index) => {
-    //       // 判断点击位置是否在该金币范围内
-    //       if (this.isIntersect(pos, coin)) {
-    //         this.repackClick()
-    //         clickedCoins.push({
-    //           x: e.clientX,
-    //           y: e.clientY,
-    //     // 索引很重要，用于删除this.coinArr内的该金币
-    //           index: index
-    //         });
-    //       }
-    //     });
-    //     // 如果点击中了重叠的金币，只取第一个即可  也只删除第一个金币  count也只增加一次
-    //     if (clickedCoins.length > 0) {
-    //       this.count += 1;
-    //       const bubble = {
-    //         x: clickedCoins[0].x,
-    //         y: clickedCoins[0].y,
-    //         opacity: 1
-    //       };
-    //       // 这跟生成+1冒泡效果相关，下面马上讲
-    //       this.bubbleArr.push(bubble);
-    //       // 移除被点中的第一个金币对象
-    //       this.coinArr.splice(clickedCoins[0].index, 1);
-    //     }
-    //   });
-    // },
-
 
 </script>
 

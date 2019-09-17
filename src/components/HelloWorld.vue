@@ -6,6 +6,8 @@
 </template>
 
 <script>
+// 速度、红包数量、密度
+
 const repackWarConfig = {
   count: 10, // 掉落红包数量
   speed: 1, // y轴位移
@@ -68,11 +70,12 @@ export default {
       -webkit-transform:translateY(-300px);
     }
     100% {
-      transform: translateY(80vh);
-      -ms-transform:translateY(80vh);
-      -webkit-transform:translateY(80vh);
+      transform: translateY(100vh);
+      -ms-transform:translateY(100vh);
+      -webkit-transform:translateY(100vh);
     }
   }
+  // 横向变化
   // @keyframes chandou{
   //     0%{margin-left:-120px}
   //     50%{margin-left:0px}
