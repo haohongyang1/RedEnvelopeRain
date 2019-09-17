@@ -2,8 +2,8 @@
   <div class="red-package-contain">
     <img id="source" width="20" height="30" style="display:none" src="../assets/hongbao.png">
     <canvas id="canvas" :width="innerWidth" :height="innerHeight" @click="listenClick"></canvas>
-    <div v-if="bDisplay" class="suspension-layer">
-      <flip ></flip>
+    <div v-show="bDisplay" class="suspension-layer">
+      <flip ref="flipEffect"></flip>
     </div>
   </div>
 </template>
@@ -199,9 +199,11 @@ export default {
     repackClick() {
       this.numClick++ 
       this.bDisplay = true
+      this.$refs.flipEffect.animationSwitching('running')
       setTimeout(() => {
         this.bDisplay = false
       }, 2000)
+
       console.log('点击红包canvas' + this.numClick)
     },
     listenClick(e) {

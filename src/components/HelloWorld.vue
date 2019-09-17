@@ -2,10 +2,12 @@
   <div class="red-package-contain">
     <!-- @webkitAnimationIteration='iterationEvent(item, $event)' -->
     <img src="@/assets/hongbao.png" :class="getClass()" :style="getStyle()" v-for="item in count" :key="item"  @click="repackClick">
+    <flip ref="flipEffect"></flip>
   </div>
 </template>
 
 <script>
+import flip from './Flip'
 // 速度、红包数量、密度
 
 const repackWarConfig = {
@@ -31,17 +33,20 @@ export default {
   },
   data () {
     return {
-      numClick: 0
+      bDisplay: false
     }
+  },
+  components: {
+    flip
   },
   methods: {
     repackClick() {
-      this.numClick++ 
-      console.log('点击红包css' + this.numClick)
+      this.bDisplay = true
+      this.$refs.flipEffect.animationSwitching('running')
+      setTimeout(() => {
+        this.bDisplay = false
+      }, 2000)
     },
-    // iterationEvent (item, $event) {
-    //   $event.target.style.cssText = this.getStyle()
-    // },
     getClass () {
       return `hb-item hbsd-${Math.floor(Math.random() * 50 + 30)}`
     },
@@ -59,7 +64,7 @@ export default {
     top: 0;
     right: 0;
     bottom: 0;
-    z-index: 30000;
+    z-index: 1000;
     cursor: pointer;
   }
   /////////////////////////////////
